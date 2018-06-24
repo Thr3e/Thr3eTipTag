@@ -1,5 +1,19 @@
 @charset "UTF-8";
 
+@keyframes wrapAnimate {
+      0%{transform: translateX(0)}
+     10%{transform: translateX(-20px)}
+     20%{transform: translateX(0)}
+     30%{transform: translateX(20px)}
+     40%{transform: translateX(0)}
+     50%{transform: translateX(20px)}
+     60%{transform: translateX(0)}
+     70%{transform: translateX(-20px)}
+     80%{transform: translateX(0)}
+     90%{transform: translateX(20px)}
+    100%{transform: translateX(0)}
+}
+
 #thr3e-mask {
     position: fixed;
     top: 0;
@@ -12,25 +26,58 @@
 }
 
 #thr3e-tag-view{
-
+    overflow: hidden;
+    background: #fff;
+    width: 40%;
+    min-width: 240px;
+    margin: auto;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 #thr3e-content{
-
+    font-size: 28px;
+    line-height: 30px;
+    word-wrap: break-word;
+    padding: 0 40px;
 }
 
 #thr3e-btn-wrap{
-
+    display: flex;
+    justify-content: space-around;
+    font-size: 24px;
+    line-height: 56px;
+    border-top: 1px solid #333;
+    margin-top: 20px;
+    cursor: pointer;
 }
 
-#thr3e-conf-btn{
-
-}
-
+#thr3e-conf-btn, 
 #thr3e-cancle-btn{
-
+    width: 100%;
 }
 
 #thr3e-input{
+    display: block;
+    margin: 0 auto;
+    line-height: 28px;
+    width: 80%;
+    outline: 0;
+    border: 1px solid #333;
+    border-radius: 4px;
+    padding-left: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
 
+#thr3e-mask .thr3e-hide{
+    display: none;
+}
+
+#thr3e-mask .thr3e-uninput {
+    border-color: #BE3E3E !important;
+    animation: wrapAnimate .2s; 
 }
