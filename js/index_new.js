@@ -41,7 +41,7 @@
     btn4.onclick = function () {
         new THRTipTag({
             type: "prompt",
-            title: "xxx 提示",
+            title: "验证提示",
             styleFamily: 'gray',
             placeholder: "请输入您的身份证号！",
             confCallBack: function (text) {
