@@ -27,9 +27,8 @@
 
 #thr3e-tag-view{
     overflow: hidden;
-    background: #fff;
-    width: 40%;
-    min-width: 240px;
+    width: 20%;
+    min-width: 280px;
     margin: auto;
     border: 1px solid #ccc;
     border-radius: 10px;

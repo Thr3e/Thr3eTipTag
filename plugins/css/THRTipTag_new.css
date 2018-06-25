@@ -1,0 +1,87 @@
+@charset "UTF-8";
+
+@keyframes wrapAnimate {
+      0%{transform: translateX(0)}
+     10%{transform: translateX(-12px)}
+     20%{transform: translateX(0)}
+     30%{transform: translateX(12px)}
+     40%{transform: translateX(0)}
+     50%{transform: translateX(12px)}
+     60%{transform: translateX(0)}
+     70%{transform: translateX(-12px)}
+     80%{transform: translateX(0)}
+     90%{transform: translateX(12px)}
+    100%{transform: translateX(0)}
+}
+
+thr-tiptag {
+    display: block;
+    text-align: center;
+    font-size: 28px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -100%);
+    opacity: 0;
+    transition: .35s all linear;
+}
+
+thr-tiptag.appear{
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+thr-tiptag.close{
+    transform: translate(-50%, -100%);
+    opacity: 0;
+}
+
+tiptag-wrap{
+    display: block;
+    overflow: hidden;
+    width: 300px;
+    border-radius: 20px;
+}
+
+tiptag-title{
+    display: block;
+    padding: 10px 0;
+}
+
+tiptag-content{
+    display: block;
+    line-height: 30px;
+    font-size: 24px;
+    word-wrap: break-word;
+    padding: 25px 30px;
+}
+
+tiptag-btnbox{
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    line-height: 56px;
+    border-top: 1px solid;
+    cursor: pointer;
+}
+
+tiptag-btn{
+    width: 100%;
+}
+
+tiptag-wrap input{
+    display: block;
+    width: 100%;
+    line-height: 28px;
+    outline: 0;
+    border: 1px solid;
+    border-radius: 4px;
+    padding-left: 10px;
+    font-size: 20px;
+    box-sizing: border-box;
+}
+
+input.thr3e-uninput {
+    border-color: #BE3E3E !important;
+    animation: wrapAnimate .2s; 
+}

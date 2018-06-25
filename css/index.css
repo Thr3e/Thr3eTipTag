@@ -20,5 +20,9 @@ body {
     border: 2px solid #b9e1dc;
     cursor: pointer;
     border-radius: 8px;
-    margin: 150px 30px;
+    margin: 100px 30px;
+}
+
+.test-btn:hover {
+    background: #d35353;
 }
