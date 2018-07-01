@@ -4,26 +4,30 @@
         this.confBtn   = null;
         this.cancelBtn = null;
         this.textInput = null;
+        this.closeBtn  = null;
         this.mainWrap  = null;
+        this.alertImg  = null;
 
         //设置默认样式
         this.config = {
-            "type": "default",
-            "message": "",
-            "autoClose": 0,
-            "placeholder": "请输入...",
-            "cancelTitle": "取消",
-            "confTitle": "确定",
-            "cancelCallBack": "",
-            "confCallBack": "",
-            "imageURL" : "",
-            "imageType" : "warning",
-            'styleFamily' : 'red',
-            'style' : {
-                'red'  : { 'background' : '#FBFBFB', 'border' : '#B9E1DC', 'inverse' : '#F38181', 'color' : '#756C83'},
-                'blue' : { 'background' : '#DBEDF3', 'border' : '#00818A', 'inverse' : '#404B69', 'color' : '#283149'},
-                'green': { 'background' : '#F4F9F4', 'border' : '#C4E3CB', 'inverse' : '#8AAE92', 'color' : '#616161'},
-                'gray' : { 'background' : '#F7F7F7', 'border' : '#93DEFF', 'inverse' : '#606470', 'color' : '#323643'}
+            "type"           : "default",
+            "message"        : "",
+            "autoClose"      : 0,
+            "title"          : "",
+            "placeholder"    : "请输入...",
+            "cancelTitle"    : "取消",
+            "confTitle"      : "确定",
+            "cancelCallBack" : "",
+            "confCallBack"   : "",
+            "iconURL"        : "",
+            "alertType"      : "",
+            "highlightColor" : "",
+            'colorStyle'     : {
+                "warning" : "#f23557",
+                "error"   : "#f23557",
+                "message" : "#00bbf0",
+                "doubt"   : "#ffc93c",
+                "correct" : "#52d681"
             }
         }
         // 扩展默认属性
@@ -31,12 +35,13 @@
         // 初始化方法
         this.init();
         //设置样式
-        this.mainWrap  && this.loadStyle(this.mainWrap,  this.config, 'wrap');
-        this.confBtn   && this.loadStyle(this.confBtn,   this.config, 'inverse');
-        this.textInput && this.loadStyle(this.textInput, this.config, 'border');
+        this.loadStyle(this.config.highlightColor || this.config.colorStyle[this.config.alertType]);
         // 事件添加
-        this.confBtn && this.addEvent(this.confBtn, "click", this.btnClick.bind(this));
+        this.confBtn   && this.addEvent(this.confBtn  , "click", this.btnClick.bind(this));
         this.cancelBtn && this.addEvent(this.cancelBtn, "click", this.btnClick.bind(this));
+        this.closeBtn  && this.addEvent(this.closeBtn , "click", this.btnClick.bind(this));
+
+        //TODO:
         document.body.style.cssText = "overflow: hidden;";
         // 判断是否自动关闭
         this.config.autoClose && setTimeout(this.close, this.config.autoClose);
@@ -46,23 +51,27 @@
         init : function(){
             var _this    = this,
                 config   = this.config,
-                tagHtmls = "",
-                curPath  = (this.getPath(this.getEl)).slice(0,-15);
-            if (!config.imageURL || curPath) {
-                config.imageURL = curPath + "imgs/" + config.imageType + ".svg";
-            }
+                tagHtmls = "";
+            config.iconURL = this.getIconPath(this);
+            
+            //加载页面元素
             tagHtmls = this.getHtml(config);
             document.body.insertAdjacentHTML("beforeEnd", tagHtmls);
+            //获取元素
+            this.confBtn   = _this.getEl("#THR-tiptag-conf-btn");
+            this.cancelBtn = _this.getEl("#THR-tiptag-canc-btn");
+            this.textInput = _this.getEl("#THR-tiptag-text-ipt");
+            this.closeBtn  = _this.getEl("tiptag-closeBtn");
+            this.mainWrap  = _this.getEl('tiptag-wrap');
+            this.alertImg  = _this.getEl("tiptag-img");
+            this.closeBtn  = _this.getEl("tiptag-closeBtn");
+            //加载页面样式
             setTimeout(function(){
-                (_this.getEl('tiptag-wrap')).className = 'appear';
-                if (!config.message) 
-                    (_this.getEl("tiptag-content")).style.display = "none";
-                _this.getEl("tiptag-img").style.cssText = "background-image : url(" + config.imageURL + ")";
-            }, 10)
-            this.confBtn   = this.getEl("#THR-tiptag-conf-btn");
-            this.cancelBtn = this.getEl("#THR-tiptag-canc-btn");
-            this.textInput = this.getEl("#THR-tiptag-text-ipt");
-            this.mainWrap  = this.getEl("tiptag-wrap");
+                this.mainWrap.className = 'appear';
+                if (!config.message) (_this.getEl("tiptag-content")).style.display = "none";
+                this.alertImg.style.cssText = "background-image : url(" + config.iconURL + ")";
+                this.closeBtn.style.cssText = "background-image : url(" + this.getPath(_this.getEl).slice(0,-15) + "imgs/close.svg)"
+            }.bind(this), 10);
         },
         extend : function (oldObj, newObj) {
             for(var key in newObj) {
@@ -116,33 +125,30 @@
                 document.body.style.cssText = "overflow: auto;";
             }, 200);
         },
-        loadStyle : function(el, obj, type){
-            var styleObj = obj ? obj.style[obj.styleFamily] : '';
-            if (styleObj){
-                switch(type){
-                    case "inverse" :{
-                        el.style.cssText = 'background:' + styleObj['inverse'] + '; color:' + styleObj['background'];
-                    }break;
-                    case "wrap" : {
-                        el.style.cssText = 'background:' + styleObj['background'] + '; color:' + styleObj['color'];
-                    }break;
-                    case "border" : {
-                        el.style.cssText = 'border-color :' + styleObj['border'];
-                    }break;
+        loadStyle : function(color){
+            if(color) {
+                var hlSpan  = document.querySelectorAll(".THR-highlight"),
+                    confBtn = document.querySelector("#THR-tiptag-conf-btn");
+                if (confBtn) {
+                    confBtn.style.background = color;
                 }
+                for (var idx = 0, len = hlSpan.length; idx < len; idx++) {
+                    hlSpan[idx].style.color = color;
+                };
             }
         },
         getPath : function(callBack){
             var oScript = callBack('script', true);
-            for (var idx = 0 , len = oScript.length; idx < len; idx++) {
-                if (oScript[idx].src.match("THRTiptag.js")) {
+            for (var idx = 0, len = oScript.length; idx < len; idx++) {
+                if (oScript[idx].src.match("THRTiptag.js"))
                     return oScript[idx].src;
-                }
             }
         },
         getHtml : function(config){
             var htmlStr = "";
             htmlStr +=  "<THR-tiptag><tiptag-wrap>" + "<tiptag-img></tiptag-img>"+
+                        "<tiptag-closeBtn></tiptag-closeBtn>" +
+                        "<tiptag-title>"   + config.title   + "</tiptag-title>"  +
                         "<tiptag-content>" + config.message + "</tiptag-content>";
             switch (config.type) {
                 case "prompt" : htmlStr += "<tiptag-ipt><input type='text' id='THR-tiptag-text-ipt' placeholder='" + config.placeholder + "'></tiptag-ipt>" ;
@@ -162,6 +168,14 @@
         getEl : function(sel, isAll) {
             if (isAll) return document.querySelectorAll(sel);
             else return document.querySelector(sel);
+        },
+        getIconPath : function(_this){
+            if (_this.config.iconURL) return _this.config.iconURL;
+            else {
+                var curPath  = (_this.getPath(_this.getEl)).slice(0,-15);
+                return curPath + "imgs/" + _this.config.alertType + ".svg";
+            }
+
         }
     };
     window.THRTipTag = THRTipTag;

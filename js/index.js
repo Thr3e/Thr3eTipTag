@@ -10,16 +10,19 @@
         new THRTipTag({
             type: "default",
             autoClose: 3000,
-            message: "我是一段很长的提示信息我是一段很长的提示信息我是一段很长的提示信息我是一段很长的提示信息我是一段很长的提示信息",
-            styleFamily: 'red'
+            title:"我是标题",
+            alertType:"correct",
+            message: "我是一段很长的提示信息<span class='THR-highlight'>我是一段特别的提示信息</span>我是一段很长的提示信息我是一段很长的提示信息",
         });
     };
     //警告框
     btn2.onclick = function () {
         new THRTipTag({
             type: "alert",
-            message: "您确定要退出游戏吗？",
-            styleFamily: 'blue'
+            title:"提示",
+            alertType:"correct",
+            message: "商品已加入购物车",
+            confTitle:"知道了"
         });
     };
     //确认框
@@ -27,7 +30,7 @@
         new THRTipTag({
             type: "confirm",
             title: "注册提示",
-            styleFamily: 'green',
+            alertType:"warning",
             message: "您确定要退出登录吗？",
             confCallBack: function () {
                 console.log("用户点击了确定按钮！");
@@ -42,7 +45,8 @@
         new THRTipTag({
             type: "prompt",
             title: "验证提示",
-            styleFamily: 'gray',
+            // highlightColor:"#52d681",
+            iconURL:"./plugins/imgs/message.svg",
             placeholder: "请输入您的身份证号！",
             confCallBack: function (text) {
                 console.log(text);
