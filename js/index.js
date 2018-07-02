@@ -11,7 +11,7 @@
             type: "default",
             autoClose: 3000,
             title:"我是标题",
-            alertType:"correct",
+            alertType:"doubt",
             message: "我是一段很长的提示信息<span class='THR-highlight'>我是一段特别的提示信息</span>我是一段很长的提示信息我是一段很长的提示信息",
         });
     };
@@ -46,7 +46,7 @@
             type: "prompt",
             title: "验证提示",
             // highlightColor:"#52d681",
-            iconURL:"./plugins/imgs/message.svg",
+            iconURL:"./plugin/imgs/message.svg",
             placeholder: "请输入您的身份证号！",
             confCallBack: function (text) {
                 console.log(text);
