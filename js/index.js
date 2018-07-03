@@ -44,10 +44,9 @@
     btn4.onclick = function () {
         new THRTipTag({
             type: "prompt",
-            title: "验证提示",
-            // highlightColor:"#52d681",
-            iconURL:"/plugin/imgs/message.svg",
-            placeholder: "请输入您的身份证号！",
+            highlightColor:"#444",
+            iconURL:"./imgs/clock.jpg",
+            placeholder: "请输入您预约的时间",
             confCallBack: function (text) {
                 console.log(text);
             },
